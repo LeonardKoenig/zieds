@@ -24,27 +24,23 @@
 #include <stdlib.h>
 #include <math.h>
 
-#define BLOOM_INIT(bf)                                                  \
-        do {                                                            \
-                bf = malloc(sizeof(struct bloom_filter));               \
-                bf->nelems = 100;                                       \
-                bf->mbits = 1600;                                       \
-                bf->nhashes = 11;                                       \
-                bf->buf = calloc(bf->nelems, sizeof(uint16_t));         \
-        } while(0)
-#define BLOOM_INIT_NELEMS(bf, nelems)                                   \
-        do {                                                            \
-                bf = malloc(sizeof(struct bloom_filter));               \
-                bf->nelems = nelems;                                    \
-                bf->mbits = bf->nelems * (sizeof(uint16_t) << 3);       \
-                bf->nhashes = (bf->mbits / bf->nelems) * log(2);        \
-                bf->buf = calloc(bf->nelems, sizeof(uint16_t));         \
-        } while(0)
-#define BLOOM_FREE(bf)                                                  \
-        do {                                                            \
-                free(bf->buf);                                          \
-                free(bf);                                               \
-        } while(0)
+#define BLOOM_INIT(bf)                                         \
+	bf = malloc(sizeof(struct bloom_filter));              \
+	bf->nelems = 100;                                      \
+	bf->mbits = 1600;                                      \
+	bf->nhashes = 11;                                      \
+	bf->buf = calloc(bf->nelems, sizeof(uint16_t));
+
+#define BLOOM_INIT_NELEMS(bf, nelems)                          \
+	bf = malloc(sizeof(struct bloom_filter));              \
+	bf->nelems = nelems;                                   \
+	bf->mbits = bf->nelems * (sizeof(uint16_t) << 3);      \
+	bf->nhashes = (bf->mbits / bf->nelems) * log(2);       \
+	bf->buf = calloc(bf->nelems, sizeof(uint16_t));
+
+#define BLOOM_FREE(bf)                                         \
+	free(bf->buf);                                         \
+	free(bf);
 
 struct bloom_filter {
         uint8_t nhashes; /* optimal number of hashes unless explicit (m / n * ln(2)) */
