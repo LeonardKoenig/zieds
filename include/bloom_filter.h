@@ -49,6 +49,7 @@ struct bloom_filter {
         uint32_t mbits; /* number of bits (16 * nelems) */
 };
 
+void bloom_insert_bytes(struct bloom_filter *bf, const char *data, size_t len);
 void bloom_insert_int(struct bloom_filter *bf, const int32_t data);
 void bloom_insert_string(struct bloom_filter *bf, const char *data);
 bool bloom_query_int(struct bloom_filter *bf, const int32_t data);
