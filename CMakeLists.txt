@@ -1,6 +1,10 @@
 project(zieds)
 cmake_minimum_required(VERSION 3.1.0)
 
+# enable virtually all warnings, but disable about (sign-)conversion since
+# otherwise the imported hashes.h won't shut up
+set(CMAKE_C_FLAGS "-Wall -Wpedantic -Wextra -Wshadow -Wno-conversion -Wno-sign-conversion")
+
 # Some variables collecting what to build
 set(SRC_LIST "src/bloom_filter.c"
 	     "src/hashes.h")
