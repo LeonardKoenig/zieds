@@ -22,7 +22,7 @@ int main()
 
 	int32_t data2[] = { 42, 7, 6, 1, 0, -4, 8 };
 	size_t len2 = sizeof data2 / sizeof data2[0];
-	for (size_t i = 0; i < len; i++) {
+	for (size_t i = 0; i < len2; i++) {
 		printf("% 3" PRId32 " in set?: %s\n",
 				data2[i],
 				bloom_query_int(bf, data2[i]) ? "true" : "false" );
