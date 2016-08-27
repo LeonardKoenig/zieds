@@ -24,29 +24,35 @@
 #include <stdlib.h>
 #include <math.h>
 
-#define BLOOM_INIT(bf)                                         \
-	bf = malloc(sizeof(struct bloom_filter));              \
-	bf->nelems = 100;                                      \
-	bf->mbits = 1600;                                      \
-	bf->nhashes = 11;                                      \
-	bf->buf = calloc(bf->nelems, sizeof(uint16_t));
+#define BLOOM_INIT(bf)						\
+{								\
+	bf = malloc(sizeof(struct bloom_filter));		\
+	bf->nelems = 100;					\
+	bf->mbits = 1600;					\
+	bf->nhashes = 11;					\
+	bf->buf = calloc(bf->nelems, sizeof(uint16_t));		\
+}
 
-#define BLOOM_INIT_NELEMS(bf, nelems)                          \
-	bf = malloc(sizeof(struct bloom_filter));              \
-	bf->nelems = nelems;                                   \
-	bf->mbits = bf->nelems * (sizeof(uint16_t) << 3);      \
-	bf->nhashes = (bf->mbits / bf->nelems) * log(2);       \
-	bf->buf = calloc(bf->nelems, sizeof(uint16_t));
+#define BLOOM_INIT_NELEMS(bf, nelems)				\
+{								\
+	bf = malloc(sizeof(struct bloom_filter));		\
+	bf->nelems = nelems;					\
+	bf->mbits = bf->nelems * (sizeof(uint16_t) << 3);	\
+	bf->nhashes = (bf->mbits / bf->nelems) * log(2);	\
+	bf->buf = calloc(bf->nelems, sizeof(uint16_t));		\
+}
 
-#define BLOOM_FREE(bf)                                         \
-	free(bf->buf);                                         \
-	free(bf);
+#define BLOOM_FREE(bf)						\
+{								\
+	free(bf->buf);						\
+	free(bf);						\
+}
 
 struct bloom_filter {
-        uint8_t nhashes; /* optimal number of hashes unless explicit (m / n * ln(2)) */
-        uint16_t *buf; /* bits per element */
-        uint32_t nelems; /* number of elements */
-        uint32_t mbits; /* number of bits (16 * nelems) */
+	uint8_t nhashes; /* optimal number of hashes unless explicit (m / n * ln(2)) */
+	uint16_t *buf; /* bits per element */
+	uint32_t nelems; /* number of elements */
+	uint32_t mbits; /* number of bits (16 * nelems) */
 };
 
 void bloom_insert_bytes(struct bloom_filter *bf, const char *data, size_t len);
