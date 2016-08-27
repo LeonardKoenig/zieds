@@ -1,5 +1,5 @@
 /*
-*   Zieds - A C implementation of a bloom filter                    
+*   Zieds - A C implementation of a bloom filter
 *   Copyright (C) <2016>  Grif Hughes - ghughes@smu.edu
 *
 *   This program is free software: you can redistribute it and/or modify
@@ -17,7 +17,7 @@
 */
 
 #ifndef BLOOM_FILTER_H
-#define BLOOM_FILTER_H 
+#define BLOOM_FILTER_H
 
 #include <stdint.h>
 #include <stdbool.h>
@@ -48,7 +48,7 @@
 
 struct bloom_filter {
         uint8_t nhashes; /* optimal number of hashes unless explicit (m / n * ln(2)) */
-        uint16_t *buf; /* bits per element */ 
+        uint16_t *buf; /* bits per element */
         uint32_t nelems; /* number of elements */
         uint32_t mbits; /* number of bits (16 * nelems) */
 };

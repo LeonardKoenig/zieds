@@ -1,4 +1,4 @@
-/* 
+/*
 *   Zieds - A C implementation of a bloom filter
 *   Copyright (C) <2016>  Grif Hughes - ghughes@smu.edu
 *
@@ -17,7 +17,7 @@
 */
 
 #include <string.h>
-#include "../include/bloom_filter.h"
+#include "bloom_filter.h"
 #include "hashes.h"
 
 #define SET_BIT(bf, k) (bf->buf[k >> 4] |= 1 << (k % 16))
@@ -33,7 +33,7 @@ void bloom_insert_int(struct bloom_filter *bf, const int32_t data)
         uint32_t hash[4];
 
         H_a(&data, sizeof(data), hash);
-        for(i = 0; i < bf->nhashes; ++i) 
+        for(i = 0; i < bf->nhashes; ++i)
                 SET_BIT(bf, G(hash, i, &data, sizeof(data), bf->mbits));
 }
 
@@ -54,7 +54,7 @@ bool bloom_query_int(struct bloom_filter *bf, const int32_t data)
         uint32_t hash[4];
 
         H_a(&data, sizeof(data), hash);
-        for(i = 0; i < bf->nhashes; ++i) 
+        for(i = 0; i < bf->nhashes; ++i)
                 if(!TEST_BIT(bf, G(hash, i, &data, sizeof(data), bf->mbits)))
                         return false;
         return true;
@@ -67,7 +67,7 @@ bool bloom_query_string(struct bloom_filter *bf, const char *data)
         uint64_t len = strlen(data);
 
         H_a(data, len, hash);
-        for(i = 0; i < bf->nhashes; ++i) 
+        for(i = 0; i < bf->nhashes; ++i)
                 if(!TEST_BIT(bf, G(hash, i, data, len, bf->mbits)))
                         return false;
         return true;
